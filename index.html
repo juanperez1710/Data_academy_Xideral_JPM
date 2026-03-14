@@ -3,72 +3,145 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Juan | Backend Developer Portfolio</title>
+  <title>Juan | Data Academy Portfolio</title>
   <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
- <nav>
+  <nav>
     <ul>
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#tareas">Tareas</a></li>
       <li><a href="#ejercicios">Ejercicios</a></li>
+      <li><a href="#cursos">Cursos AWS</a></li>
       <li><a href="#proyecto">Proyecto</a></li>
     </ul>
   </nav>
 
+  <div class="hero" id="inicio">
+    <div class="hero-inner">
+      <div class="hero-badge">Data Academy · Xideral</div>
+      <h1>Juan Pérez <span>Marcelo</span></h1>
+      <p>Portafolio de ejercicios, tareas y proyecto final del programa de formación en datos.</p>
+    </div>
+  </div>
+
   <main>
-    <header id="inicio">
-      <h1>Juan Pérez Marcelo</h1>
-      <p>Portafolio para la Data Academy de Xideral <br> 
-    </p>
-    </header>
-
-    <section>
-      <h2 id="tareas">Tareas </h2>
-      <div class="card">
-        <div class="card-image">
-          <img src="images/tarea1.png" alt="Captura de Tarea 1">
-        </div>
-        <div class="card-content">
-        <h3> <a href="./tarea1">Tarea 1: </a></h3>
-        <p></p>
-        <span class="tag">Python</span><span class="tag">Jupyter Notebook</span>  <span class="tag">pandas</span>
-        </div>
+    <section id="tareas">
+      <div class="section-header">
+        <h2>Tareas</h2>
       </div>
-      <div class="card">
-        <h3>Tarea 2: </h3>
-        <p></p>
-        <span class="tag"></span>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-image">
+            <img src="images/tarea1.png" alt="Captura de Tarea 1">
+          </div>
+          <div class="card-content">
+            <h3><a href="./tarea1">Tarea 1</a></h3>
+            <p></p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Jupyter Notebook</span>
+              <span class="tag">pandas</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>Tarea 2</h3>
+            <p></p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section >
-      <h2 id="ejercicios">Ejercicios en clase</h2>
-      <div class="card">
-         <div class="card-image">
-          <img src="images/ejercicio1.png" alt="Captura de ejercicio 1">
-         </div>
-        <h3><a href="./Ejercicio_1">Ejercicio 1</a></h3>
-        <p>En este ejercicio se listaron canciones populares no explicitas para playlist familiar usando numpy y pandas.</p>
-        <span class="tag">Python</span><span class="tag">Jupyter Notebook</span> <span class="tag">pandas</span>
-        <span class="tag">numpy</span>
+    <section id="ejercicios">
+      <div class="section-header">
+        <h2>Ejercicios en clase</h2>
       </div>
-      <div class="card">
-        <h3>Ejercicio 2</h3>
-        <p></p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-image">
+            <img src="images/ejercicio1.png" alt="Captura de ejercicio 1">
+          </div>
+          <div class="card-content">
+            <h3><a href="./Ejercicio_1">Ejercicio 1</a></h3>
+            <p>En este ejercicio se listaron canciones populares no explícitas para playlist familiar usando numpy y pandas.</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Jupyter Notebook</span>
+              <span class="tag">pandas</span>
+              <span class="tag">numpy</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>Ejercicio 2</h3>
+            <p></p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2 id="proyecto">Proyecto Final</h2>
-      <div class="card featured">
-        <div class="project-content">
-          <h3>Nombre del proyecto</h3>
-          <p></p>
-          <div class="tech-stack">
-            <span>Docker</span> <span>AWS</span>
+    <section id="cursos">
+      <div class="section-header">
+        <h2>Cursos AWS</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-content">
+            <h3>Curso 1</h3>
+            <p></p>
+            <div class="tags">
+              <span class="tag">AWS</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>Curso 2</h3>
+            <p></p>
+            <div class="tags">
+              <span class="tag">AWS</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>Curso 3</h3>
+            <p></p>
+            <div class="tags">
+              <span class="tag">AWS</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-content">
+            <h3>Curso 4</h3>
+            <p></p>
+            <div class="tags">
+              <span class="tag">AWS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proyecto">
+      <div class="section-header">
+        <h2>Proyecto Final</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card featured">
+          <div class="card-content">
+            <h3>Nombre del proyecto</h3>
+            <p></p>
+            <div class="tech-stack">
+              <span>Docker</span>
+              <span>AWS</span>
+            </div>
           </div>
         </div>
       </div>
