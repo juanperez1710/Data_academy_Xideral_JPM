@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarea 2 — Limpieza de CSV con Streamlit</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* === CODE BLOCK === */
+    .code-wrapper {
+      background: #0f172a;
+      border-radius: var(--card-radius);
+      border: 1px solid #1e293b;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+
+    .code-header span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #94a3b8;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dots i {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .code-dots i:nth-child(1) { background: #ef4444; }
+    .code-dots i:nth-child(2) { background: #f59e0b; }
+    .code-dots i:nth-child(3) { background: #22c55e; }
+
+    .code-wrapper pre {
+      margin: 0;
+      padding: 28px 28px;
+      overflow-x: auto;
+      font-family: 'Courier New', Consolas, monospace;
+      font-size: 0.85rem;
+      line-height: 1.75;
+      color: #e2e8f0;
+    }
+
+    /* Syntax highlight tokens */
+    .kw  { color: #c084fc; font-weight: bold; }   /* keywords */
+    .fn  { color: #67e8f9; }                       /* functions/methods */
+    .st  { color: #86efac; }                       /* strings */
+    .cm  { color: #64748b; font-style: italic; }   /* comments */
+    .nm  { color: #fbbf24; }                       /* numbers */
+    .op  { color: #f472b6; }                       /* operators */
+    .va  { color: #e2e8f0; }                       /* variables */
+    .im  { color: #818cf8; font-weight: bold; }    /* import */
+
+    /* === SCREENSHOTS GRID === */
+    .screenshots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+      gap: 24px;
+    }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .screenshot-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.1);
+      border-color: var(--accent);
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .screenshot-caption {
+      padding: 14px 18px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.5px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* === BACK LINK === */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      margin-bottom: 40px;
+    }
+
+    .back-link:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .screenshots-grid { grid-template-columns: 1fr; }
+      .code-wrapper pre { font-size: 0.78rem; padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html#inicio">Inicio</a></li>
+      <li><a href="index.html#tareas">Tareas</a></li>
+      <li><a href="index.html#ejercicios">Ejercicios</a></li>
+      <li><a href="index.html#cursos">Cursos AWS</a></li>
+      <li><a href="index.html#proyecto">Proyecto</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Tarea 2 · Streamlit</div>
+      <h1>Limpieza de <span>CSV</span></h1>
+      <p>Aplicación web con Streamlit que permite subir un archivo .csv, detectar y eliminar filas nulas y duplicadas, y descargar el resultado limpio.</p>
+    </div>
+  </div>
+
+  <main>
+
+    <a href="index.html" class="back-link">← Volver al portafolio</a>
+
+    <!-- CÓDIGO FUENTE -->
+    <section>
+      <div class="section-header">
+        <h2>Código fuente — app.py</h2>
+      </div>
+
+      <div class="code-wrapper">
+        <div class="code-header">
+          <div class="code-dots">
+            <i></i><i></i><i></i>
+          </div>
+          <span>app.py</span>
+          <div class="tags" style="margin:0;">
+            <span class="tag">Python</span>
+            <span class="tag">Streamlit</span>
+            <span class="tag">pandas</span>
+          </div>
+        </div>
+        <pre><code><span class="im">import</span> <span class="va">streamlit</span> <span class="im">as</span> <span class="va">st</span>
+<span class="im">import</span> <span class="va">pandas</span> <span class="im">as</span> <span class="va">pd</span>
+
+<span class="va">st</span>.<span class="fn">set_page_config</span>(<span class="va">page_title</span><span class="op">=</span><span class="st">"My Streamlit App"</span>, <span class="va">page_icon</span><span class="op">=</span><span class="st">":rocket:"</span>, <span class="va">layout</span><span class="op">=</span><span class="st">"centered"</span>)
+
+<span class="va">st</span>.<span class="fn">title</span>(<span class="st">"Sube un csv"</span>)
+<span class="va">st</span>.<span class="fn">write</span>(<span class="st">"Sube un archivo .csv"</span>)
+<span class="va">archivo</span> <span class="op">=</span> <span class="va">st</span>.<span class="fn">file_uploader</span>(<span class="st">"Upload a file"</span>, <span class="va">type</span><span class="op">=</span>[<span class="st">"csv"</span>])
+
+<span class="kw">if</span> <span class="va">archivo</span> <span class="kw">is not</span> <span class="nm">None</span>:
+    <span class="kw">try</span>:
+        <span class="va">df</span> <span class="op">=</span> <span class="va">pd</span>.<span class="fn">read_csv</span>(<span class="va">archivo</span>)
+        <span class="kw">if</span> <span class="va">df</span>.<span class="fn">empty</span>:
+            <span class="va">st</span>.<span class="fn">error</span>(<span class="st">"El archivo está vacío, no es posible realizar limpieza de datos, favor de subir otro archivo"</span>)
+        <span class="kw">else</span>:
+            <span class="va">total_filas</span> <span class="op">=</span> <span class="fn">len</span>(<span class="va">df</span>)
+            <span class="va">cols</span> <span class="op">=</span> [<span class="va">c</span> <span class="kw">for</span> <span class="va">c</span> <span class="kw">in</span> <span class="va">df</span>.<span class="va">columns</span> <span class="kw">if</span> <span class="va">c</span>.<span class="fn">lower</span>() <span class="op">!=</span> <span class="st">"id"</span>]
+            <span class="va">filas_nulas</span> <span class="op">=</span> <span class="va">df</span>[<span class="va">df</span>.<span class="fn">isnull</span>().<span class="fn">any</span>(<span class="va">axis</span><span class="op">=</span><span class="nm">1</span>)]
+            <span class="va">filas_duplicadas</span> <span class="op">=</span> <span class="va">df</span>[<span class="va">df</span>.<span class="fn">duplicated</span>(<span class="va">subset</span><span class="op">=</span><span class="va">cols</span>)]
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">f</span><span class="st">"Total de filas: </span><span class="op">{</span><span class="va">total_filas</span><span class="op">}</span><span class="st">"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">f</span><span class="st">"Filas con valores nulos: </span><span class="op">{</span><span class="fn">len</span>(<span class="va">filas_nulas</span>)<span class="op">}</span><span class="st">"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">f</span><span class="st">"Filas duplicadas (ignorando 'id'): </span><span class="op">{</span><span class="fn">len</span>(<span class="va">filas_duplicadas</span>)<span class="op">}</span><span class="st">"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="st">"Ejemplos de filas con valores nulos:"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">filas_nulas</span>.<span class="fn">head</span>(<span class="nm">5</span>))
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="st">"Ejemplos de filas duplicadas:"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">filas_duplicadas</span>.<span class="fn">head</span>(<span class="nm">5</span>))
+            <span class="va">df_limpio</span> <span class="op">=</span> <span class="va">df</span>.<span class="fn">dropna</span>().<span class="fn">drop_duplicates</span>(<span class="va">subset</span><span class="op">=</span><span class="va">cols</span>)
+
+            <span class="va">filas_finales</span> <span class="op">=</span> <span class="fn">len</span>(<span class="va">df_limpio</span>)
+            <span class="va">filas_borradas</span> <span class="op">=</span> <span class="va">total_filas</span> <span class="op">-</span> <span class="va">filas_finales</span>
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="st">"Limpieza realizada"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">f</span><span class="st">"Filas eliminadas: </span><span class="op">{</span><span class="va">filas_borradas</span><span class="op">}</span><span class="st">"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">f</span><span class="st">"Filas restantes: </span><span class="op">{</span><span class="va">filas_finales</span><span class="op">}</span><span class="st">"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="st">"Primeras filas del archivo limpio:"</span>)
+            <span class="va">st</span>.<span class="fn">write</span>(<span class="va">df_limpio</span>.<span class="fn">head</span>(<span class="nm">10</span>))
+            <span class="va">st</span>.<span class="fn">download_button</span>(
+                <span class="va">label</span><span class="op">=</span><span class="st">"Descargar archivo limpio"</span>,
+                <span class="va">data</span><span class="op">=</span><span class="va">df_limpio</span>.<span class="fn">to_csv</span>(<span class="va">index</span><span class="op">=</span><span class="nm">False</span>).<span class="fn">encode</span>(<span class="st">"utf-8"</span>),
+                <span class="va">file_name</span><span class="op">=</span><span class="st">"datos_limpios.csv"</span>,
+                <span class="va">mime</span><span class="op">=</span><span class="st">"text/csv"</span>)
+    <span class="kw">except</span> <span class="fn">Exception</span> <span class="kw">as</span> <span class="va">e</span>:
+        <span class="va">st</span>.<span class="fn">error</span>(<span class="va">f</span><span class="st">"Error al leer el archivo: </span><span class="op">{</span><span class="va">e</span><span class="op">}</span><span class="st">"</span>)</code></pre>
+      </div>
+    </section>
+
+    <!-- CAPTURAS DE PANTALLA -->
+    <section>
+      <div class="section-header">
+        <h2>Funcionamiento de la aplicación</h2>
+      </div>
+
+      <div class="screenshots-grid">
+        <div class="screenshot-card">
+          <img src="images/tarea2.png" alt="Vista principal de la aplicación">
+          <div class="screenshot-caption">tarea2.png — Vista principal · carga de archivo</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="images/tarea2.1.png" alt="Análisis de filas nulas y duplicadas">
+          <div class="screenshot-caption">tarea2.1.png — Detección de nulos y duplicados</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="images/tarea2.2.png" alt="Resultado de la limpieza de datos">
+          <div class="screenshot-caption">tarea2.2.png — Resultado de limpieza de datos</div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="images/tarea2.3.png" alt="Descarga del archivo limpio">
+          <div class="screenshot-caption">tarea2.3.png — Descarga del archivo limpio</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Juan Pérez Marcelo — Portafolio Data Academy Xideral</p>
+  </footer>
+
+</body>
+</html>
