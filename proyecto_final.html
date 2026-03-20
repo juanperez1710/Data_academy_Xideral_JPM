@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi Analytics Pro — Proyecto Final</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── Extras exclusivos de esta página ── */
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; font-size: 1rem; }
+
+    /* Hero del proyecto */
+    .project-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #312e81 100%);
+      padding: calc(var(--nav-h) + 80px) 40px 80px;
+    }
+    .project-hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      animation: fadeInUp 0.7s ease-out;
+    }
+    .project-hero .hero-badge { margin-bottom: 22px; }
+    .project-hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 18px;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+    .project-hero h1 span { color: var(--accent); }
+    .project-hero .subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 560px;
+      margin: 0 0 36px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .hero-tags span {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 5px 16px;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* Secciones de contenido */
+    .content-section {
+      margin-bottom: 72px;
+    }
+
+    /* Descripción en prosa */
+    .prose {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 780px;
+    }
+    .prose strong { color: var(--primary); font-weight: 700; }
+    .prose a { color: var(--accent); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+
+    /* Arquitectura — imagen full-width */
+    .arch-wrapper {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .arch-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Flujo de datos — pasos */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .flow-step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    }
+    .flow-step:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 36px rgba(15,23,42,0.08);
+      border-color: var(--accent);
+    }
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .flow-step h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+    .flow-step p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Galería de capturas — dos columnas */
+    .screenshot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .screenshot-grid.single { grid-template-columns: 1fr; }
+
+    .screenshot-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+    }
+    .screenshot-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(15,23,42,0.1);
+      border-color: var(--accent);
+    }
+    .screenshot-card .sc-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      background: #e0f2fe;
+    }
+    .screenshot-card .sc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .screenshot-card:hover .sc-img img { transform: scale(1.04); }
+    .screenshot-card .sc-caption {
+      padding: 16px 18px 18px;
+    }
+    .screenshot-card .sc-caption h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 6px;
+    }
+    .screenshot-card .sc-caption p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Patrones de diseño — lista de pills */
+    .patterns-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .pattern-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--card-radius);
+      padding: 20px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      transition: border-color 0.25s;
+    }
+    .pattern-item:hover { border-color: var(--accent); }
+    .pattern-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .pattern-item h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 4px;
+    }
+    .pattern-item p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Separador con label */
+    .divider-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 52px 0 40px;
+    }
+    .divider-label span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-soft);
+      white-space: nowrap;
+    }
+    .divider-label::before,
+    .divider-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .project-hero { padding: calc(var(--nav-h) + 48px) 24px 52px; }
+      .screenshot-grid { grid-template-columns: 1fr; }
+      .flow-grid { grid-template-columns: 1fr; }
+      .patterns-list { grid-template-columns: 1fr; }
+      .screenshot-card .sc-img { height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html#inicio">Inicio</a></li>
+      <li><a href="index.html#tareas">Tareas</a></li>
+      <li><a href="index.html#ejercicios">Ejercicios</a></li>
+      <li><a href="index.html#cursos">Cursos AWS</a></li>
+      <li><a href="index.html#proyecto">Proyecto</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <div class="project-hero">
+    <div class="project-hero-inner">
+      <div class="hero-badge">Proyecto Final · Data Academy Xideral</div>
+      <h1>Taxi Analytics <span>Pro</span></h1>
+      <p class="subtitle">
+        Dashboard interactivo de analítica para datos de taxis de Nueva York (NYC),
+        impulsado por AWS Lambda y desplegado en Docker.
+      </p>
+      <div class="hero-tags">
+        <span>Python 3.11</span>
+        <span>Streamlit</span>
+        <span>AWS Lambda</span>
+        <span>Amazon S3</span>
+        <span>boto3</span>
+        <span>pandas</span>
+        <span>Docker</span>
+        <span>Matplotlib</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTENIDO ── -->
+  <main>
+    <a href="index.html" class="back-link">Volver al portafolio</a>
+
+    <!-- 1. DESCRIPCIÓN GENERAL -->
+    <section class="content-section">
+      <div class="section-header"><h2>Descripción General</h2></div>
+      <p class="prose">
+        <strong>Taxi Analytics Pro</strong> es una aplicación web de analítica operativa y financiera
+        para las flotas <em>yellow</em> y <em>green</em> de taxis de la ciudad de Nueva York.
+        Los datos provienen del repositorio oficial de la
+        <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page" target="_blank" rel="noopener">
+          NYC Taxi &amp; Limousine Commission (TLC)
+        </a>,
+        que publica registros de viajes mensuales en formato Parquet.
+      </p>
+      <p class="prose" style="margin-top:14px;">
+        El sistema combina una <strong>función AWS Lambda</strong> que extrae y transforma los datos
+        bajo demanda, un <strong>bucket S3</strong> como almacén de CSVs preprocesados y una
+        interfaz <strong>Streamlit</strong> que renderiza KPIs y gráficos en tiempo real.
+        Todo el servicio se orquesta con <strong>Docker Compose</strong> garantizando alta disponibilidad.
+      </p>
+    </section>
+
+    <!-- 2. ARQUITECTURA -->
+    <section class="content-section">
+      <div class="section-header"><h2>Arquitectura del Sistema</h2></div>
+      <p class="prose">
+        El siguiente diagrama muestra las tres capas principales: fuente de datos pública (NYC TLC),
+        capa de cómputo en AWS (Lambda + S3) y capa de presentación (Streamlit en Docker).
+      </p>
+      <div class="arch-wrapper">
+        <img src="images/arquitectura_proyecto_final.png" alt="Diagrama de arquitectura del proyecto final">
+      </div>
+    </section>
+
+    <div class="divider-label"><span>Cómo funciona</span></div>
+
+    <!-- 3. FLUJO DE DATOS -->
+    <section class="content-section">
+      <div class="section-header"><h2>Flujo de Datos</h2></div>
+      <p class="prose">
+        La aplicación sigue un patrón de <strong>carga lazy</strong>: primero consulta S3;
+        si los datos del periodo seleccionado no existen, dispara la Lambda de forma asincrónica
+        para que los genere en background sin bloquear la UI.
+      </p>
+      <div class="flow-grid">
+        <div class="flow-step">
+          <div class="step-number">1</div>
+          <h4>Selección de filtros</h4>
+          <p>El usuario elige flota (yellow / green), año y mes desde la barra lateral de Streamlit.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">2</div>
+          <h4>Consulta a S3</h4>
+          <p>La app busca CSVs preprocesados en <code>s3://xideralaws-curso-juan/dashboard_data/</code>.
+             Si existen, los carga con pandas en memoria.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">3</div>
+          <h4>Invocación de Lambda</h4>
+          <p>Si no hay datos para el periodo, se invoca <em>xideral_juan_proyecto_1</em> con
+             <code>InvocationType='Event'</code> (asincrónico). La UI notifica al usuario sin bloquearse.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">4</div>
+          <h4>Extracción y transformación</h4>
+          <p>La Lambda descarga el Parquet de NYC TLC, agrega KPIs y distribución de pagos,
+             y escribe los CSVs resultantes en S3.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">5</div>
+          <h4>Renderizado del dashboard</h4>
+          <p>Al recargar, Streamlit lee los nuevos CSVs y muestra tarjetas de KPI, gráfico de dona
+             de pagos e ingreso por milla calculado dinámicamente.</p>
+        </div>
+        <div class="flow-step">
+          <div class="step-number">6</div>
+          <h4>Filtrado en cliente</h4>
+          <p>Los filtros subsecuentes aplican sobre DataFrames en memoria con pandas,
+             eliminando llamadas extra a S3 y reduciendo latencia.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PREPROCESAMIENTO — imágenes pre_1 y pre_2 -->
+    <section class="content-section">
+      <div class="section-header"><h2>Preprocesamiento de Datos</h2></div>
+      <p class="prose">
+        Antes de que la Lambda entregue datos al dashboard, realiza una limpieza y
+        agregación de los registros crudos de NYC TLC: elimina nulos, normaliza tipos,
+        filtra viajes atípicos y calcula métricas derivadas como el ingreso por milla.
+      </p>
+      <div class="screenshot-grid">
+        <div class="screenshot-card">
+          <div class="sc-img">
+            <img src="images/pre_1.png" alt="Preprocesamiento – paso 1">
+          </div>
+          <div class="sc-caption">
+            <h4>Exploración inicial del dataset</h4>
+            <p>Inspección de columnas, tipos de dato y distribución de valores para identificar
+               campos a limpiar antes de la agregación.</p>
+          </div>
+        </div>
+        <div class="screenshot-card">
+          <div class="sc-img">
+            <img src="images/pre_2.png" alt="Preprocesamiento – paso 2">
+          </div>
+          <div class="sc-caption">
+            <h4>Transformación y cálculo de KPIs</h4>
+            <p>Agrupación por tipo de taxi, año y mes. Cálculo de tarifa media, ingresos totales,
+               conteo de viajes y distribución de métodos de pago.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. WATCHER / MONITOREO -->
+    <section class="content-section">
+      <div class="section-header"><h2>Monitoreo del Pipeline</h2></div>
+      <p class="prose">
+        Para validar que la Lambda se ejecuta correctamente y escribe los resultados en S3,
+        se implementó un <strong>watcher</strong> que observa la actividad del bucket y
+        confirma la llegada de los archivos procesados.
+      </p>
+      <div class="screenshot-grid">
+        <div class="screenshot-card">
+          <div class="sc-img">
+            <img src="images/watcher_captura.png" alt="Watcher – configuración">
+          </div>
+          <div class="sc-caption">
+            <h4>Configuración del Watcher</h4>
+            <p>Script de monitoreo apuntando al prefijo <code>dashboard_data/</code> del bucket S3,
+               esperando la aparición de nuevos archivos CSV tras la invocación Lambda.</p>
+          </div>
+        </div>
+        <div class="screenshot-card">
+          <div class="sc-img">
+            <img src="images/watcher_funcionando.png" alt="Watcher – en ejecución">
+          </div>
+          <div class="sc-caption">
+            <h4>Watcher en Ejecución</h4>
+            <p>El watcher detecta en tiempo real los CSVs generados por la Lambda,
+               confirmando que el pipeline de extracción y transformación completó sin errores.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. PIPELINE EXITOSO -->
+    <section class="content-section">
+      <div class="section-header"><h2>Pipeline Exitoso</h2></div>
+      <p class="prose">
+        Una vez que la Lambda termina, los archivos CSV aparecen en S3 y el dashboard
+        puede consumirlos. La siguiente captura muestra la confirmación de un pipeline
+        completo de extracción → transformación → almacenamiento ejecutado sin errores.
+      </p>
+      <div class="screenshot-grid single">
+        <div class="screenshot-card">
+          <div class="sc-img" style="height: 300px;">
+            <img src="images/pipeline_exitoso.png" alt="Pipeline exitoso">
+          </div>
+          <div class="sc-caption">
+            <h4>Ejecución exitosa del pipeline</h4>
+            <p>Los CSVs de KPIs y distribución de pagos están disponibles en S3,
+               listos para ser consumidos por el dashboard en la siguiente recarga.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. DASHBOARD FINAL -->
+    <section class="content-section">
+      <div class="section-header"><h2>Dashboard en Acción</h2></div>
+      <p class="prose">
+        La interfaz de Streamlit presenta tarjetas de KPI (tarifa media, ingresos totales,
+        número de viajes y pasajeros), un gráfico de dona con la distribución de métodos
+        de pago y una métrica de eficiencia de ingreso por milla, todo filtrable por
+        flota, año y mes desde la barra lateral.
+      </p>
+      <div class="screenshot-grid single">
+        <div class="screenshot-card">
+          <div class="sc-img" style="height: 360px;">
+            <img src="images/proyecto_final_captura.png" alt="Captura del dashboard Taxi Analytics Pro">
+          </div>
+          <div class="sc-caption">
+            <h4>Taxi Analytics Pro — Vista del Dashboard</h4>
+            <p>KPI cards generadas con <code>st.metric</code>, gráfico de dona con Matplotlib
+               y filtros reactivos en la barra lateral. Desplegado en Docker sobre el puerto 8501.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider-label"><span>Decisiones de diseño</span></div>
+
+    <!-- 8. PATRONES DE DISEÑO -->
+    <section class="content-section">
+      <div class="section-header"><h2>Patrones &amp; Estrategias</h2></div>
+      <div class="patterns-list">
+        <div class="pattern-item">
+          <div class="pattern-icon">⚡</div>
+          <div>
+            <h4>Carga Lazy / Bajo Demanda</h4>
+            <p>S3 actúa como caché. La Lambda solo se invoca cuando no hay datos para el periodo,
+               evitando cómputo y coste innecesarios.</p>
+          </div>
+        </div>
+        <div class="pattern-item">
+          <div class="pattern-icon">🔀</div>
+          <div>
+            <h4>Invocación Asincrónica</h4>
+            <p><code>InvocationType='Event'</code> libera la UI inmediatamente. El usuario sigue
+               navegando mientras Lambda procesa en background.</p>
+          </div>
+        </div>
+        <div class="pattern-item">
+          <div class="pattern-icon">📦</div>
+          <div>
+            <h4>Separación de Capas</h4>
+            <p>Datos en S3, cómputo pesado en Lambda y presentación en Streamlit.
+               Cada capa puede escalarse o reemplazarse de forma independiente.</p>
+          </div>
+        </div>
+        <div class="pattern-item">
+          <div class="pattern-icon">🔍</div>
+          <div>
+            <h4>Filtrado en Cliente</h4>
+            <p>Los filtros de flota/año/mes operan sobre DataFrames en memoria con pandas,
+               reduciendo llamadas al API de AWS y latencia perceptible.</p>
+          </div>
+        </div>
+        <div class="pattern-item">
+          <div class="pattern-icon">🔐</div>
+          <div>
+            <h4>Configuración por Variables de Entorno</h4>
+            <p>Credenciales AWS gestionadas con <code>python-dotenv</code> y <code>docker-compose env_file</code>.
+               Ningún secreto se hardcodea en el código fuente.</p>
+          </div>
+        </div>
+        <div class="pattern-item">
+          <div class="pattern-icon">🐳</div>
+          <div>
+            <h4>Contenedorización Reproducible</h4>
+            <p>Dockerfile con AWS CLI v2 incluido. <code>restart: unless-stopped</code> en Compose
+               garantiza disponibilidad continua del servicio.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. ESTRUCTURA DE ARCHIVOS -->
+    <section class="content-section">
+      <div class="section-header"><h2>Estructura del Proyecto</h2></div>
+      <div class="card" style="padding: 0;">
+        <div class="card-content" style="padding: 24px 28px; gap: 0;">
+          <pre style="margin:0; font-family:'Courier New',monospace; font-size:0.82rem; color:var(--text-muted); line-height:1.8; overflow-x:auto;">
+<span style="color:var(--primary);font-weight:700;">Taxi_dashboard/</span>
+├── <span style="color:var(--accent);font-weight:700;">app.py</span>               <span style="color:var(--text-soft);">← Aplicación Streamlit (UI + lógica de datos)</span>
+├── <span style="color:var(--accent-warm);font-weight:700;">requirements.txt</span>     <span style="color:var(--text-soft);">← Dependencias Python</span>
+├── <span style="color:var(--accent-warm);font-weight:700;">Dockerfile</span>           <span style="color:var(--text-soft);">← Imagen Docker (python:3.11-slim + AWS CLI v2)</span>
+├── <span style="color:var(--accent-warm);font-weight:700;">docker-compose.yml</span>   <span style="color:var(--text-soft);">← Orquestación del contenedor</span>
+└── <span style="color:var(--text-soft);">.env</span>                 <span style="color:var(--text-soft);">← (no versionado) Credenciales AWS</span>
+
+<span style="color:var(--primary);font-weight:700;">S3: xideralaws-curso-juan/dashboard_data/</span>
+├── <span style="color:var(--accent);">kpis/</span>                <span style="color:var(--text-soft);">← CSVs con métricas agregadas (viajes, ingresos…)</span>
+└── <span style="color:var(--accent);">payment_type/</span>        <span style="color:var(--text-soft);">← CSVs con distribución de métodos de pago</span></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Juan Pérez Marcelo — Portafolio Data Academy Xideral</p>
+  </footer>
+
+</body>
+</html>
